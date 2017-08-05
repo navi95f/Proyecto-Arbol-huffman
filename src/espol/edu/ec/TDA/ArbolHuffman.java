@@ -81,7 +81,7 @@ public class ArbolHuffman {
         return codigo;  
     }
     
-    public String decodificar(String codigo, HashMap<String, String> mapa){
+    public String decodificar(String codigo){
     
         String texto="";
         RamaHuffman nodo=this.raiz;
@@ -101,6 +101,7 @@ public class ArbolHuffman {
             
             if(nodo instanceof Hoja){
                 texto+=((Hoja)nodo).getValor();
+                nodo=this.raiz;
             }
         }
         
