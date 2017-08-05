@@ -8,6 +8,7 @@ package espol.edu.ec.TDA;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.PriorityQueue;
+import java.util.Set;
 
 /**
  *
@@ -24,8 +25,8 @@ public class ArbolHuffman {
         Comparator<RamaHuffman> comparator= (RamaHuffman r1, RamaHuffman r2)->(r1.getFrecuencia()-r2.getFrecuencia());
         PriorityQueue <RamaHuffman> arbol= new PriorityQueue<>(comparator);
         
-        for(String key: mapa.keySet()){            
-            arbol.offer(new Hoja(mapa.get(key), key));
+        for(String key: mapa.keySet()){
+            arbol.offer(new Hoja(mapa.get(key), key));            
         }
         
         while(arbol.size()>1){
@@ -40,33 +41,28 @@ public class ArbolHuffman {
     }
     
     public HashMap<String, String> calcularCodigos(){      
-        String codigo="";
         HashMap<String, String> mapa= new HashMap<>();
         if(this.raiz==null){
             return mapa;
-        }else{
-            
+        }else{           
+            RamaHuffman nodo = this.raiz;
+            this.buscarCodigo("", mapa, nodo);
+                 
         }
         return mapa;
     }
     
-    private String buscarCodigo(String codigo, String letra, RamaHuffman nodo){
+    private void buscarCodigo(String codigo, HashMap<String, String> mapa, RamaHuffman nodo){
         
         if(nodo!=null){
-            String nuevoCodigo=codigo;
             if(nodo instanceof Hoja){
-                if(letra.equals(((Hoja) nodo).getValor())){
-                    return nuevoCodigo;
-                }else
-                    return "";
+                mapa.put(((Hoja) nodo).getValor(), codigo);
+                
             }else{
-                String derecha=buscarCodigo(nuevoCodigo.concat("1"), letra, ((Nodo)nodo).getDerecha());
-                String izquierda=buscarCodigo(nuevoCodigo.concat("0"), letra, ((Nodo)nodo).getIzquierda());
+                buscarCodigo(codigo+"0", mapa, ((Nodo)nodo).getIzquierda());
+                buscarCodigo(codigo+"1", mapa, ((Nodo)nodo).getDerecha());
             }
-
-            return "";
-        }else
-            return "";
+        }
         
     }
     
