@@ -165,9 +165,8 @@ public class Ventana {
     private void descomprimir() {
         if (!this.archivoTF.getText().isEmpty() && !this.nuevoArchivoTF.getText().isEmpty()) {
             String archivo = Util.leerTexto(this.archivoTF.getText());
-            String codigos = Util.leerTexto(this.archivoTF.getText().split(".txt")[0]+"_compress.txt");
             HashMap<String, Integer> frecuencias = Util.leerMapa(this.archivoTF.getText().split(".txt")[0]+"_tablaFrec.txt");
-            if (!archivo.isEmpty() && !codigos.isEmpty() && !frecuencias.isEmpty()) {
+            if (!archivo.isEmpty() && !frecuencias.isEmpty()) {
                
               
                 String codBin = Util.hexaBinario(archivo);
@@ -181,7 +180,6 @@ public class Ventana {
                 String result = "Archivo abierto: \n";
                 result += archivo + "\n\n";
                 result += "Tabla de frecuencias del archivo: \n" + frecuencias + "\n\n";
-                result += "Mapa de codigos del archivo: \n" + codigos + "\n\n";
                 result += "Binario del archivo: \n" + codBin + "\n\n";
                 result += "Archivo decodificado: \n" + archivoDeco + "\n\n";
                 

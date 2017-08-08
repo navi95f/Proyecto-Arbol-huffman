@@ -52,16 +52,70 @@ public class Util {
     }
     
     public static String binarioHexa(String binario){
-        int decimal = Integer.parseInt(binario, 2);
-        String hexa= Integer.toHexString(decimal);
+        int cont=0;
+        String[] binarioArray = binario.split("");
+        String binarioCompleto = "";
+        String hex = "";
         
-        return hexa;
+        //contando cuantos bloques de 4 hay
+        cont = binario.length() / 4;
+        //sacando la diferencia de los digitos que no entraron al bloque de 4
+        int diferencia = (binario.length() - (cont*4));
+        
+        //numero por completar de ceros
+        int porCompletar = 4-diferencia;
+        
+ 
+        for (String bin : binarioArray) {
+            binarioCompleto += bin;
+        }
+        
+        //rellenando de ceros 
+        for (int i=0;i<porCompletar;i++) {
+            binarioCompleto += "0";
+        }
+        
+        binarioArray = binarioCompleto.split("");
+        for (int i=0;i<binarioArray.length - 3;i+=4) {
+            String s = binarioArray[i] + binarioArray[i + 1] + binarioArray[i + 2] + binarioArray[i + 3];
+            long decimal = Long.parseLong(s,2);
+            hex += Long.toHexString(decimal);
+        }
+        
+        for (int i=0;i<porCompletar;i++) {
+            hex += "-";
+        }
+        
+        return hex;
     }
     
     public static String hexaBinario(String hexa){
         
-        int decimal = Integer.parseInt(hexa, 16);
-        String binario= Integer.toBinaryString(decimal);
+        String binario = "";
+        String[] hexaArray = hexa.split("");
+        int cont = 0;
+        
+        for (String h : hexaArray) {
+            if (!h.equals("-")) {
+                long decimal = Long.parseLong(h,16);
+                String bin = Long.toBinaryString(decimal);
+                if (bin.length() < 4) {
+                    int dif = 4-bin.length();
+                    for (int i=0;i<dif;i++) {
+                        binario+="0";
+                    }
+                    binario += bin;
+                } else {
+                    binario += bin;
+                }
+            } else {
+                cont++;
+            }
+        }
+        if (cont != 0) {
+            //quitando los digitos añadidos para completar el bloque
+            binario = binario.substring(0, binario.length() - cont);
+        }
         
         return binario;
     }
